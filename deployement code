@@ -1,0 +1,7 @@
+import requests
+
+url = "http://127.0.0.1:5000/predict"
+data = {"features": [0.5, 1.2, 3.1, 4.5]}  # Replace with actual patient data
+
+response = requests.post(url, json=data)
+print(response.json())
