@@ -1,0 +1,37 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+# Sample patient dataset (mock data)
+data = {
+    'age': [25, 60, 45, 33, 55, 70],
+    'gender': [1, 0, 1, 0, 0, 1],  # 1 = Male, 0 = Female
+    'fever': [1, 0, 1, 0, 1, 1],
+    'cough': [1, 1, 0, 0, 1, 0],
+    'fatigue': [0, 1, 1, 0, 1, 1],
+    'blood_pressure': [120, 140, 130, 110, 150, 145],
+    'disease': ['Flu', 'Hypertension', 'Flu', 'Healthy', 'Hypertension', 'Hypertension']
+}
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+
+# Features and labels
+X = df.drop('disease', axis=1)
+y = df['disease']
+
+# Split into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train Random Forest Classifier
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Evaluate
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Classification Report:")
+print(classification_report(y_test, y_pred))
